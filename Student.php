@@ -21,7 +21,7 @@ public function __construct($name, $age, $phone,$class)
     /**
      * @param mixed $class
      */
-    public function setClass($class): void
+    public function setClass($class)
     {
         $this->class = $class;
     }

@@ -1,5 +1,6 @@
 <?php
-
+include_once "User.php";
+include_once "Student.php";
 
 class StudentManager
 {
@@ -16,11 +17,16 @@ class StudentManager
         return json_decode($dataFile, true);
     }
 
-    public function saveDataToFileJon($data)
+    public function addDataToJson($data)
     {
         $currentData = $this->readFileJson($this->path);
         array_push($currentData, $data);
-        $newData = json_encode($currentData);
+        $this->saveFile($currentData);
+    }
+
+    public function saveFile($data)
+    {
+        $newData = json_encode($data);
         file_put_contents($this->path, $newData);
     }
 
@@ -33,19 +39,40 @@ class StudentManager
             "class" => $student->getClass()
         ];
 
-        $this->saveDataToFileJon($arr);
+        $this->addDataToJson($arr);
     }
 
     public function getListStudent()
     {
         $arr = $this->readFileJson($this->path);
-
-        $studentList= [];
-        foreach ($arr as $item){
-            $students = new Student($item["name"],$item["age"],$item["phone"],$item["class"]);
-            array_push($studentList,$students);
+        $studentList = [];
+        foreach ($arr as $item) {
+            $students = new Student($item["name"], $item["age"], $item["phone"], $item["class"]);
+            array_push($studentList, $students);
         }
-
         return $studentList;
+    }
+
+
+    public function getStudentsIndex($index)
+    {
+        $students = $this->getListStudent();
+        return $students[$index];
+    }
+
+    public function delete($index)
+    {
+        $listStudent = $this->getListStudent();
+        array_splice($listStudent, $index, 1);
+
+         $this->saveFile($listStudent);
+    }
+
+    function edit($index, $newData)
+    {
+        $listStudents = $this->getListStudent();
+        $listStudents[$index] = $newData;
+        $this->saveFile($listStudents);
+
     }
 }

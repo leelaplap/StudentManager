@@ -19,7 +19,7 @@ public function __construct($name,$age,$phone)
         return $this->name;
     }
 
-    public function setName($name): void
+    public function setName($name)
     {
         $this->name = $name;
     }
@@ -29,7 +29,7 @@ public function __construct($name,$age,$phone)
         return $this->age;
     }
 
-    public function setAge($age): void
+    public function setAge($age)
     {
         $this->age = $age;
     }
@@ -39,7 +39,7 @@ public function __construct($name,$age,$phone)
         return $this->phone;
     }
 
-    public function setPhone($phone): void
+    public function setPhone($phone)
     {
         $this->phone = $phone;
     }
